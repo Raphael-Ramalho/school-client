@@ -12,6 +12,15 @@ export default function Home() {
   const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedRole = localStorage.getItem("user-role") as UserRole;
+      if (savedRole) {
+        setRole(savedRole);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     async function fetchPosts() {
       try {
         const response = await fetch("http://localhost:3030/posts");

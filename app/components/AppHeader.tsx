@@ -84,7 +84,13 @@ export default function AppHeader({ role, onRoleChange }: AppHeaderProps) {
       {/* Role Selector using HeroUI Select */}
       <Select
         selectedKey={role}
-        onSelectionChange={(key) => onRoleChange(key as UserRole)}
+        onSelectionChange={(key) => {
+          const newRole = key as UserRole;
+          if (typeof window !== "undefined") {
+            localStorage.setItem("user-role", newRole);
+          }
+          onRoleChange(newRole);
+        }}
         aria-label="Tipo de usuário"
       >
         <SelectTrigger

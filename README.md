@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blog Escolar - Front-end
 
-## Getting Started
+Este é o front-end do projeto Blog Escolar, uma plataforma para compartilhamento de posts entre alunos e professores.
 
-First, run the development server:
+## 🚀 Tecnologias
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **UI Lib**: [HeroUI](https://heroui.com/)
+- **Estilização**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Linguagem**: TypeScript
+- **Consumo de API**: Fetch API
+
+## 🛠️ Setup Inicial
+
+### Pré-requisitos
+- Node.js instalado (recomendado v20 ou superior)
+- Backend ([school-api](../school-api)) em execução
+
+### Instalação
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone o repositório e acesse a pasta
+cd school-client
+
+# Instalar dependências
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Execução
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Rodar em modo de desenvolvimento
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A aplicação estará disponível em [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## 🏗️ Arquitetura
 
-To learn more about Next.js, take a look at the following resources:
+A aplicação utiliza a arquitetura baseada em diretórios do Next.js App Router, focando em componentes modulares e responsivos.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/app`: Ponto de entrada da aplicação e definição de rotas.
+  - `layout.tsx`: Estrutura base da página (HTML, Body, Fontes).
+  - `page.tsx`: Componente principal que gerencia o estado global da página (listagem de posts, carregamento e controle de papéis).
+  - `/components`: Componentes de interface reutilizáveis.
+    - `AppHeader.tsx`: Cabeçalho dinâmico com seletor de papel (Role Selector).
+    - `PostCard.tsx`: Gerencia a exibição de posts individuais e fornece formulários para criação/edição.
+- `/types`: Contém definições de tipos TypeScript para garantir consistência em toda a aplicação.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Fluxo de Dados
+O front-end conecta-se ao backend local através da porta `3030`. As operações de listagem, criação, atualização e exclusão de posts são realizadas via chamadas HTTP (REST).
 
-## Deploy on Vercel
+## 📖 Guia de Uso
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Papéis de Usuário (Roles)
+A aplicação possui um sistema de troca de papéis em tempo real localizado no cabeçalho.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Aluno (Student)**:
+  - Visualiza a lista de posts recentes.
+  - Tem acesso apenas para leitura.
+- **Professor (Teacher)**:
+  - Pode criar novos posts clicando em "+ Criar post".
+  - Pode editar o conteúdo de posts existentes.
+  - Pode excluir posts da plataforma.
+
+### Persistência de Estado
+O papel selecionado é automaticamente persistido no `localStorage` do navegador. Isso significa que, ao recarregar a página, a aplicação manterá o papel (Aluno ou Professor) que você definiu anteriormente.
